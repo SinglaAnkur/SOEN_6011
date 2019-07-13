@@ -1,0 +1,76 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\graphicspath{ {./} }
+
+
+\begin{document}
+\includegraphics[scale=0.2]{concordia}
+\begin{small}
+\Large SOEN6011- Software Engineering Processes\\
+\linebreak
+F3: sinh(x)\\
+\vspace{110mm}\\
+\textbf{Submitted by:}\\
+\textbf{Ankur Singla}\\
+\textbf{40090208}\\
+\end{small}
+\newpage
+\tableofcontents
+\newpage
+\section{Problem 1:}
+\subsection{Introduction:}
+\textbf{sinh(x)} is a hyperbolic sine. This function is related to a hyperbola in the same way as the trigonometric function sin(x) is related to a circle.\\
+Consider a hyperbola:  $x^2-y^2=1$\\
+
+\begin{center}
+\includegraphics[scale=0.9]{hyperbola.JPG}\\
+\caption{Figure:1.1-1 Hyperbola}
+\end{center}
+\begin{small}
+sinh(x) would be the length of perpendicular drawn from a vertex on hyperbola to the x-axis. The vertex is 1 unit far from the origin.\\
+\[sinh(x)=\frac {e^x-e^{-x}}{2}\]\\
+Domain: $(-\infty,\infty)$\\
+Co-domain: $(-\infty,\infty)$\\
+\end{small}
+
+\subsection{ Characteristics:}
+\begin{itemize}
+\item [1.2.1]As x increases, $e^x$ increases quickly and $e^{−x}$ decreases quickly.\\
+$sinh(x) \approx \frac{e^x}{2}$
+\item [1.2.2]If x decreases, $e^x$ decreases quickly and $-e^{−x}$ becomes large.\\
+$sinh(x) \approx \frac{- e^{-x}}{2}$
+\item [1.2.3]sinh(x) is an odd function.\\
+$sinh(−x) = −sinh(x)$
+\item [1.2.4]sinh(x) is zero for x=0.\\ sinh(x) tends to infinity when x tends to infinity.\\ sinh(x) tends to minus infinity when x tends to minus infinity.
+\end{itemize}
+
+\section{Problem 2:}
+\subsection{Requirements:}
+\subsubsection{Functional Requirements:}
+\begin{itemize}
+\item [2.1.1.1]The program shall throw an error[2.2.5] when the value of x is input out of the specified range[2.2.1].
+\item [2.1.1.2]The error shall be displayed on the screen to the user.
+\item [2.1.1.3]The user shall be able to view the output after program is executed.
+\item [2.1.1.4]The program shall exit after displaying the output.
+\item [2.1.1.5]The program shall exit after throwing an error.
+\end{itemize}
+\subsubsection{Non Functional Requirements:}
+\begin{itemize}
+\item [2.1.2.1]The user shall be able to run the program on Windows 7, Windows 8, Windows 10, Mac OS X, Linux operating systems.
+\item [2.1.2.2]The user shall install Java Standard Edition Development Kit of the specified versions J2SE 5.0, Java SE 6, Java SE 7, Java SE 8.
+\item [2.1.2.3]The user shall be able to run the program through the specified Java Integrated Development Environments IntelliJ IDEA , NetBeans, Eclipse, JDeveloper.
+\item [2.1.2.4]The user doesnot need an internet connection to run the program.
+\end{itemize}
+
+\subsection{Assumptions:}
+\begin{itemize}
+\item [2.2.1]The user shall input the value of x between -300 to 700.
+\item [2.2.2]The value of x shall be integer, floating point.
+\item [2.2.3]The value of x shall not contain alphabets, keywords, space, special characters.
+\item [2.2.4]The user shall press enter key after keying in value of x to display the output.
+\item [2.2.5]The program shall display OutOfMemory error to the user.
+\end{itemize}
+\end{document}
+
+
