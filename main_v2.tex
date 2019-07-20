@@ -1,0 +1,205 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{siunitx}
+
+\usepackage[ruled,vlined]{algorithm2e}
+\SetKwProg{Fn}{Function}{}{end}
+\SetKwFunction{FnPow}{FnPower}%
+\SetKwFunction{FnFact}{FnFactorial}%
+\SetKwFunction{FnCalc}{FnCalculate}%
+\SetKwFunction{FnExp}{FnExponential}%
+\SetKwFunction{FnComp}{FnComparison}%
+
+\begin{document}
+\includegraphics[scale=0.2]{concordia}
+\begin{small}
+\Large SOEN6011- Software Engineering Processes\\
+\linebreak
+{F3: sinh(x)}\\
+Github Link: https://github.com/SinglaAnkur/SOEN\_6011
+\vspace{110mm}\\
+\textbf{Submitted by:}\\
+\textbf{Ankur Singla}\\
+\textbf{40090208}\\
+\end{small}
+\newpage
+\tableofcontents
+\newpage
+\section{Problem 1}
+\subsection{Introduction}
+\textbf{sinh(x)} is a hyperbolic[1] sine. This function is related to a hyperbola in the same way as the trigonometric function sin(x) is related to a circle.\\
+Consider a hyperbola:  $x^2-y^2=1$\\
+
+\begin{center}
+\includegraphics[scale=0.9]{hyperbola.JPG}\\
+\caption{Figure:1.1-1 Hyperbola}\\
+\captionsource{Google Images}
+\end{center}
+\begin{small}
+sinh(x) would be the length of perpendicular drawn from a vertex on hyperbola to the x-axis. The vertex is 1 unit far from the origin.[2]\\
+\[sinh(x)=\frac {e^x-e^{-x}}{2}\]\\
+Domain: $(-\infty,\infty)$\\
+Co-domain: $(-\infty,\infty)$\\
+\end{small}
+
+\subsection{ Characteristics}
+\begin{itemize}
+\item [1.2.1]As x increases, $e^x$ increases quickly and $e^{−x}$ decreases quickly.[1]\\
+$sinh(x) \approx \frac{e^x}{2}$
+\item [1.2.2]If x decreases, $e^x$ decreases quickly and $-e^{−x}$ becomes large.[1]\\
+$sinh(x) \approx \frac{- e^{-x}}{2}$
+\item [1.2.3]sinh(x) is an odd function.[1]\\
+$sinh(−x) = −\sinh(x)$
+\item [1.2.4]sinh(x)=0 for x=0.[1]\\ sinh(x) $\to \infty$ when x $\to \infty$.\\ sinh(x) $\to -\infty$ when x $\to -\infty$.
+\end{itemize}
+
+\section{Problem 2}
+\subsection{Requirements}
+\begin{itemize}
+\item [2.1.1]The value of x shall be a Real number[1].
+\end{itemize}
+
+
+\subsection{Assumptions}
+\begin{itemize}
+\item [2.2.1]x shall be an independent variable[3].
+\item [2.2.2]e shall be the base of the natural log[3].
+\end{itemize}
+\pagebreak
+\section{Problem 3}
+\subsection{Algorithm 1}
+This algorithm is based on the expansion of sinh(x) function in the form of Taylor series[4]. The function has been expanded upto $n^{th}$ term. The algorithm is divided into three functions namely: FnPower, FnFactorial, FnCalculate. \\Function FnPower is used to calculate the numerator of a term. The value of $result$ variable is returned to function FnCalculate. FnFactorial is used to calculate the denominator of a term. The value of $fact$ variable is returned to function FnCalculate. Function FnCalculate calculates aggregate value of each term and adds it to the variable $sum$ . Output of $sum$ is our desired value of the function .
+\begin{algorithm}
+\caption{ Calculate $sinh(x)= x+ \frac {x^3}{3!}+ \frac {x^5}{5!} + ... + \frac {x^{2n+1}}{(2n+1)!} + ...$ }
+\SetAlgoLined
+
+\Fn(\tcc*[h]{Function to calculate power}){\FnPow{x,n}}{
+	\KwResult{Value of $x^{2n+1}$}
+	\Begin{
+
+	$result \leftarrow x$;
+	\For{$i\leftarrow 1$ \KwTo $n-1$}{
+		$result \leftarrow result\times i$
+	}
+	\nl\KwRet{$result$}
+	}
+}
+\Fn(\tcc*[h]{Function to calculate factorial}){\FnFact{n}}{
+	\KwResult{Value of (2n+1)!}
+	\Begin{
+
+	$fact \leftarrow 1$;
+	\For{$i\leftarrow 1$ \KwTo $n$}{
+		$fact \leftarrow fact \times i$
+	}
+	\nl\KwRet{$fact$}
+	}
+}
+\Fn(\tcc*[h]{Function to calculate final value}){\FnCalc{n}}{
+	\KwData{Value of $x, x \in \mathbb{R}$ }
+	\KwResult{Value of sinh(x)}
+	\Begin{
+
+	$sum \leftarrow 0$;
+	\For{$i\leftarrow 0$ \KwTo $70$}{
+		$sum \leftarrow sum +\frac{\FnPow(x,((2 * i) + 1))}{\FnFact((2 \times i) + 1))}$
+	}
+	\nl\KwRet{$sum$}
+	}
+}
+\end{algorithm}
+
+\subsection{Algorithm 2}
+\begin{algorithm}
+\caption{ Calculate $sinh(x)=\frac {e^x-e^{-x}}{2}$}
+\SetAlgoLined
+\Fn(\tcc*[h]{Function to calculate exponential}){\FnExp{n,x}}{
+	\KwResult{Value of $e^{x}$}
+	\Begin{
+
+	$sum \leftarrow 1$;
+	\For{$i\leftarrow n-1$ \KwTo $1$}{
+		$sum \leftarrow 1+ x\times \frac{sum}{i}$
+	}
+	\nl\KwRet{$sum$}
+	}
+}
+\Fn(\tcc*[h]{Finds value of the exponential based on the input value of x}){\FnComp{x}}{
+	\KwResult{Value of $sinh(x)$}
+	\Begin{
+
+
+	$output \leftarrow 0$;
+	$abs\_x \leftarrow x$;
+	\uIf{x==0}{\nl\KwRet{$0$}}
+	\uElseIf{$x$\textless$0$}
+	{
+	    $abs\_x=x\times(-1)$
+	}
+	\uIf{abs\_xc$0$ \&\& abs\_x	$\leq15$ }{
+	\For{$n\leftarrow 2$ \KwTo $1000$}{
+		$value\_e^x \leftarrow \FnExp(n,abs\_x)$\\
+		$value\_e^{-x} \leftarrow \FnExp(n,-abs\_x)$
+	}
+	output={$\frac{value\_e^x - value\_e^{-x}}{2}$}
+	}
+	\uElseIf{abs\_x\textgreater$15$ \&\& abs\_x	$\leq700$ }
+	{
+	\For{$n\leftarrow 2$ \KwTo $1000$}{
+		$value\_e^x \leftarrow \FnExp(n,abs\_x)$\\
+	}
+	output={$\frac{value\_e^x}{2}$}
+	}
+	\uIf{x\textless0}{\nl\KwRet{$output\times(-1)$}}
+	\Else{\nl\KwRet{$output$}}
+	}
+}
+\end{algorithm}
+\vspace{5mm}
+This algorithm is based on the mathematical expression of $sinh(x)=\frac{e^x-e^{-x}}{2}$. 
+Lets expand $e^x$.[5]\\
+$e^x= 1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+....+\frac{x^n}{n!}$\\
+$e^x= 1+(\frac{x}{1})\times(1+ (\frac{x}{2})\times(1+(\frac{x}{3})(....)))$\\
+Using this expansion we can calculate the value of $e^x$.\\
+Also $e^{-x}$ could be calculated by inserting x as -x in the expansion.
+FnExponential function calculates above expansion . 
+FnComparison function calls the FnExponential function based on the value of x.
+\pagebreak
+\subsection{Comparison}
+After analyzing both algorithms, Algorithm 2 was selected as the choice. Below are the advantages and disadvantages of choosing the particular algorithm.
+
+\subsubsection{Advantages}
+\vspace{1mm}
+\textbf{Algorithm 1}
+\begin{itemize}
+\item [3.1.1.1]It is easy to understand.
+\item [3.1.1.2]It is easy to maintain.
+\end{itemize}
+\vspace{1mm}
+\textbf{Algorithm 2}
+\begin{itemize}
+\item [3.1.1.3]It provides more accurate values.\\Example: For x=100, Algorithm 1 outputs as 1.3439570961820604E43 and Algorithm 2 outputs as 1.344058570908067E43.
+\item [3.1.1.4]It provides output for higher domain: x $\in$ (-700,700) as compared to Algorithm 1 x $\in$ (-150,150)
+\end{itemize}
+\subsubsection{Disadvantages}
+\textbf{Algorithm 1}
+\begin{itemize}
+\item [3.1.2.1]It provides inaccurate values as stated in [3.1.1.4]
+\item [3.1.2.2]It results in Infinity for $x\textgreater 150$ and -Infinity for $x\textless -150$.
+\end{itemize}
+\vspace{1mm}
+\textbf{Algorithm 2}
+\begin{itemize}
+\item [3.1.2.4]It is hard to maintain.
+\item [3.1.2.5]It is hard to understand.
+\item [3.1.2.5]It results in Infinity for $x\textgreater 700$ and -Infinity for $x\textless -700$.
+\end{itemize}
+\pagebreak
+\section{References}
+[1] MathCentre, 'Hyperbolic functions. Available: 2006 http://www.mathcentre.ac.uk/resources/workbooks/mathcentre/hyperbolicfunctions.pdf [Accessed: 3-July-2019].\linebreak[4]
+[2] LumenCollege 'Equations of Hyperbolas' https://courses.lumenlearning.com/waymakercollegealgebra/chapter/equations-of-hyperbolas/ [Accessed: 3-July-2019]\linebreak[4]
+[3] Alcyone Systems 'Mathematics reference' Available: 2019 http://www.alcyone.com/max/reference/maths/hyperbolic.html [Accessed: 4-July-2019]\linebreak[4]
+[4] UIC 'Stat 401: Introduction to Probability' Available: 2006 http://homepages.math.uic.edu/~jyang06/stat401/handouts/handout5.pdf [Accessed: 13-July-2019]\linebreak[4]
+[5] GeeksForGeeks team	 'Efficient program to calculate $e^x$ ' Available: 2012 https://www.geeksforgeeks.org/program-to-efficiently-calculate-ex/ [Accessed: 17-July-2019]\linebreak[4]
+\end{document}
